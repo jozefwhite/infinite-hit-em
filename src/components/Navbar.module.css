@@ -1,0 +1,38 @@
+/* src/components/Navbar.module.css */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: transparent;
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: var(--gold-yellow);
+  transition: background-color 0.3s ease;
+}
+
+.navItem {
+  color: var(--gold-yellow);
+  font-size: 1.4rem; /* Increased font size */
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navItem:hover {
+  color: #d4af37;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.7rem; /* Increased font size */
+  color: var(--gold-yellow);
+}

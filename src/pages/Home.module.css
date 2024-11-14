@@ -1,0 +1,42 @@
+/* src/pages/Home.module.css */
+
+.homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: transparent;
+  color: var(--gold-yellow);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  flex-shrink: 1;
+}
+
+.flashingTitle {
+  font-size: 2rem;
+  color: var(--gold-yellow);
+  animation: flash 1s infinite;
+  transition: opacity 0.5s ease-in-out;
+  text-align: center;
+  margin-top: 1rem; /* Reduced margin to bring closer to artwork */
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .flashingTitle {
+    font-size: 2rem; /* Increased font size for mobile */
+    height: 2.2rem; /* Adjusted height */
+  }
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}

@@ -1,0 +1,259 @@
+/* src/index.css */
+
+/* 1. Define Global CSS Variables */
+:root {
+  --site-background: linear-gradient(135deg, #000000, #333333);
+  --player-background: rgba(0, 0, 0, 0.5);
+  --gold-yellow: #FFD700; /* Yellow-gold color for consistency */
+  --heading-color: var(--gold-yellow); /* Use gold-yellow as heading color */
+  --text-color: #ffffff;
+  --button-gradient: linear-gradient(135deg, #ff7e5f, #feb47b);
+  --background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 2. Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--site-background);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  transition: background 0.5s ease;
+  min-height: 100vh;
+}
+
+/* 3. Typography */
+h1, h2, h3, h4, h5, h6, .flashingTitle, .navItem {
+  color: var(--gold-yellow); /* Set to yellow-gold */
+  font-weight: bold;
+  margin: 0;
+}
+
+.navItem:hover, .flashingTitle:hover {
+  color: #d4af37; /* Darker yellow-gold shade on hover */
+}
+
+p {
+  color: var(--text-color);
+  margin: 0;
+}
+
+a {
+  color: var(--gold-yellow); /* Yellow-gold for links */
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* 4. Container */
+.container {
+  max-width: 800px;
+  margin: 80px auto 0 auto;
+  padding: 0 20px;
+}
+
+/* 5. Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 6. Buttons */
+button {
+  background: var(--button-gradient);
+  border: none;
+  color: var(--text-color);
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+button:active {
+  opacity: 0.6;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+/* 7. Navbar Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: transparent;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.navbarScrolled {
+  background-color: var(--background-color);
+}
+
+.navItem {
+  color: var(--gold-yellow); /* Consistent yellow-gold */
+  font-size: 1.2rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navItem:hover {
+  color: #d4af37; /* Darker yellow-gold on hover */
+}
+
+/* 8. Player Styles */
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.albumContainer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+.albumArtwork {
+  width: 300px;
+  max-width: 100%;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.controlsContainer {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 20px;
+  backdrop-filter: blur(20px);
+  background: var(--player-background);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.songInfo {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.songTitle {
+  font-size: 1.6rem;
+  margin: 0;
+  color: var(--gold-yellow);
+}
+
+.songArtist {
+  font-size: 1rem;
+  margin: 0;
+  color: #ddd;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #090979);
+  transition: width 0.1s linear;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .navbar {
+    height: 50px;
+    padding: 0 10px;
+  }
+
+  .navItem {
+    font-size: 1rem;
+  }
+
+  .container {
+    margin-top: 70px;
+    padding: 0 10px;
+  }
+
+  .albumArtwork {
+    width: 100%;
+  }
+
+  .controlsContainer {
+    max-width: 360px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar {
+    height: 40px;
+    padding: 0 8px;
+  }
+
+  .navItem {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    margin-top: 60px;
+    padding: 0 8px;
+  }
+
+  .albumArtwork {
+    width: 100%;
+  }
+
+  .controlsContainer {
+    max-width: 280px;
+    padding: 12px;
+  }
+}
+
+/* Focus Styles for Accessibility */
+:focus {
+  outline: 0px solid #00d4ff;
+  outline-offset: 0px;
+}
+
+.controlButton:focus:not(:focus-visible),
+.playPauseButton:focus:not(:focus-visible),
+.volumeSlider:focus:not(:focus-visible) {
+  outline: none;
+}

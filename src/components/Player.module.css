@@ -1,0 +1,154 @@
+/* src/components/Player.module.css */
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.albumContainer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 1rem;
+}
+
+.albumArtwork {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease; /* Smooth scaling transition */
+  transform: scale(0.85); /* Default to smaller size */
+}
+
+.albumArtwork.playing {
+  transform: scale(1); /* Full size when playing */
+}
+
+.songInfo {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.songTitle {
+  font-size: 1.6rem;
+  color: #fff;
+  margin: 0;
+}
+
+.songArtist {
+  font-size: 1rem;
+  color: #ddd;
+  margin: 0;
+}
+
+.controlsContainer {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 20px;
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.1),
+    0 4px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff85, #006600);
+  transition: width 0.1s linear;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.controlButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.controlButton:hover {
+  transform: scale(1.1);
+}
+
+.volumeControl {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.volumeIcon {
+  font-size: 24px;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.volumeSlider {
+  width: 100%;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.3s;
+}
+
+.volumeSlider:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #b0b0b0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(176, 176, 176, 0.7);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .albumContainer {
+    max-width: 360px;
+  }
+
+  .controlsContainer {
+    max-width: 360px;
+  }
+}

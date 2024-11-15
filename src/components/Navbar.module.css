@@ -8,8 +8,8 @@
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly; /* Ensure items are evenly spaced across */
-  padding: 12px 10px; /* Increased top padding by 20% from 10px to 12px */
+  justify-content: space-between; /* Ensure icons are spaced evenly */
+  padding: 0 20px;
   background-color: transparent;
   backdrop-filter: blur(8px);
   z-index: 1000;
@@ -21,32 +21,26 @@
 .navItem {
   color: var(--gold-yellow);
   text-decoration: none;
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 
-.navItem:hover {
-  color: #d4af37;
+.navIcon {
+  margin: 0 15px; /* Add consistent horizontal spacing to icons */
+  font-size: 1.6rem; /* Adjust size for visual consistency */
 }
 
-.icon {
-  font-size: 2.1rem; /* Increased icon size by 30% */
-  color: var(--gold-yellow);
+.navCenterIcon {
+  margin: 0 auto; /* Center this icon in the navbar */
+  font-size: 1.6rem; /* Match icon size */
+}
+
+.navItem:hover {
+  color: #d4af37; /* Change color on hover */
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   font-weight: bold;
-  font-size: 1.7rem;
-  color: var(--gold-yellow);
-}
-
-/* Responsive Adjustments for Smaller Screens */
-@media (max-width: 768px) {
-  .navbar {
-    justify-content: space-around; /* Bring the icons closer together on smaller screens */
-    padding: 6px 5px; /* Adjusted padding on smaller screens to match the reduced size */
-  }
-
-  .icon {
-    font-size: 1.8rem; /* Reduce icon size slightly for smaller screens */
-  }
 }

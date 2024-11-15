@@ -8,12 +8,31 @@ class AudioSingleton {
     return AudioSingleton.instance;
   }
 
-  getAudio() {
-    return this.audio;
+  play(sourceUrl) {
+    if (sourceUrl && this.audio.src !== sourceUrl) {
+      this.audio.src = sourceUrl;
+    }
+    this.audio.play();
+  }
+
+  pause() {
+    this.audio.pause();
+  }
+
+  setVolume(volume) {
+    this.audio.volume = volume;
+  }
+
+  addEventListener(event, callback) {
+    this.audio.addEventListener(event, callback);
+  }
+
+  removeEventListener(event, callback) {
+    this.audio.removeEventListener(event, callback);
   }
 }
 
 const instance = new AudioSingleton();
 Object.freeze(instance);
 
-export default instance.getAudio();
+export default instance;

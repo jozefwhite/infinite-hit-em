@@ -1,19 +1,19 @@
+/* MiniPlayer.module.css */
+
 .miniPlayer {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  max-width: 480px;
-  backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 12px; /* Reduced border-radius to match the design */
-  padding: 10px;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
-  z-index: 1000;
-  cursor: pointer; /* Makes entire mini player clickable */
-  border: 2px solid red; /* TEMP: To debug visibility issues */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
 }

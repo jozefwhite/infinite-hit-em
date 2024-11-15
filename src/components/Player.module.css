@@ -1,63 +1,111 @@
 /* src/components/Player.module.css */
 
-.player {
+.playerWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  box-sizing: border-box;
-  z-index: 10; /* Ensure the player is above other layers */
+  width: 100%;
+  max-width: 500px; /* Keep consistent width with player size */
+  margin: 0 auto;
+  padding-bottom: 2rem;
 }
 
 .albumContainer {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 500px; /* Match the player size */
   margin-bottom: 1rem;
-  z-index: 11; /* Ensure artwork is visible */
+  transition: transform 0.3s ease, width 0.3s ease;
 }
 
 .albumArtwork {
   width: 100%;
-  border-radius: 12px; /* Updated radius to match MiniPlayer */
+  border-radius: 20px;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease; /* Smooth scaling transition */
+  transition: transform 0.3s ease, width 0.3s ease; /* Smooth scaling transition */
+  transform: scale(0.85); /* Default to smaller size (paused state) */
 }
 
 .albumArtwork.playing {
-  transform: scale(1.05); /* Slight enlargement when playing */
+  transform: scale(1); /* Full size when playing */
 }
 
 .songInfo {
-  margin-top: 1rem;
   text-align: center;
+  margin: 1rem 0; /* Add vertical margin to space between artwork and player */
+  z-index: 1;
 }
 
 .songTitle {
-  font-size: 1.6rem;
-  color: #fff;
-  margin: 0;
+  font-size: 2rem; /* Increased font size */
+  font-weight: normal; /* Set weight to normal */
+  color: #ffffff; /* Set to white */
+  margin: 0; /* Remove margin to properly align with artist name */
 }
 
 .songArtist {
-  font-size: 1rem;
-  color: #ddd;
-  margin: 0;
+  font-size: 1rem; /* Smaller font size for the artist name */
+  color: #ccc; /* Use a light gray color for softer emphasis */
+  margin: 0; /* Keep the margins consistent */
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 500px; /* Align with artwork size */
+  box-sizing: border-box;
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.miniPlayer {
+  max-width: 400px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.miniAlbumArtwork {
+  margin-right: 0.5rem;
+}
+
+.miniArtworkImage {
+  width: 50px; /* Thumbnail size for minimized player */
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .controlsContainer {
-  position: relative;
   width: 100%;
-  max-width: 480px;
   margin-top: 20px;
-  padding: 1rem;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 12px; /* Updated to match MiniPlayer */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-  z-index: 12; /* Ensure controls are above background layers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.miniControls {
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 10px; /* Moves the controls up or down */
 }
 
 .progressBarContainer {
@@ -66,20 +114,28 @@
   background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   cursor: pointer;
-  overflow: hidden;
   margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.parentContainer {
+  display: flex;
+  align-items: center; /* Vertically centers the controls */
 }
 
 .progressBar {
   height: 100%;
   background: linear-gradient(90deg, #00ff85, #006600);
+  transition: width 0.1s linear;
 }
 
 .controls {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .controlButton {
@@ -89,6 +145,10 @@
   font-size: 24px;
   cursor: pointer;
   outline: none;
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.2s;
 }
 
@@ -96,10 +156,16 @@
   transform: scale(1.1);
 }
 
+.miniPlayer .controlButton {
+  color: #fff; /* Match main player's button style */
+  font-size: 24px; /* Consistent size with main player */
+  background: none; /* Remove background color */
+}
+
 .volumeControl {
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 1rem;
 }
 
 .volumeIcon {
@@ -122,25 +188,21 @@
   background: rgba(255, 255, 255, 0.4);
 }
 
-.volumeSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  background: #b0b0b0;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 6px rgba(176, 176, 176, 0.7);
-  transition: background 0.3s, box-shadow 0.3s;
+.miniPlayer .volumeSlider {
+  display: none; /* Hide volume slider in mini mode */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
-  .albumContainer {
-    max-width: 360px;
+  .miniPlayer {
+    width: 95%;
+    max-width: none;
   }
 
-  .controlsContainer {
-    max-width: 360px;
+  .playerWrapper,
+  .albumContainer,
+  .player {
+    max-width: 95%; /* Adjust size for mobile to maintain balance */
   }
 
   .volumeControl {

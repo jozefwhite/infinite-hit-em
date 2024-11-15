@@ -6,21 +6,22 @@
   padding: 2rem;
   color: #fff;
   font-family: Arial, sans-serif;
+  overflow-y: auto; /* Ensure no unnecessary horizontal scrollbar */
 }
 
 .title {
   text-align: center;
   font-size: 2.5rem;
   color: #ffd700; /* Consistent gold color for title */
-  margin-bottom: 1rem; /* Create space below title */
+  margin-bottom: 1rem;
 }
 
 .content {
   line-height: 1.6;
   font-size: 1rem;
-  text-align: left; /* Left-align the text for readability */
+  text-align: left;
 }
 
 .content p {
-  margin-bottom: 1rem; /* Add space between paragraphs */
+  margin-bottom: 1rem;
 }

@@ -1,5 +1,9 @@
-// src/context/PlayerContext.js
-import React, { createContext, useState, useEffect, useRef } from 'react';
+// src/context/PlayerContext.jsx
+
+import React, { createContext, useState, useRef, useEffect, useContext } from 'react';
+import { request, gql } from 'graphql-request';
+
+const endpoint = import.meta.env.VITE_HYGRAPH_ENDPOINT;
 
 export const PlayerContext = createContext();
 
@@ -7,33 +11,50 @@ export const PlayerProvider = ({ children }) => {
   const [songs, setSongs] = useState([]);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
   const [progress, setProgress] = useState(0);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = useRef(null);
 
-  // Ref to hold audio instance
-  const audioRef = useRef(new Audio());
-
-  useEffect(() => {
-    if (songs.length > 0) {
-      audioRef.current.src = songs[currentSongIndex].audioFile.url;
-      audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play();
+  const fetchSongsFromHygraph = async () => {
+    const query = gql`
+      {
+        songs {
+          id
+          title
+          artist
+          audioFile {
+            url
+          }
+          albumArtwork {
+            url
+          }
+        }
       }
+    `;
+
+    try {
+      const data = await request(endpoint, query);
+      console.log("Fetched songs data:", data); // Debugging line to check API response
+      setSongs(data.songs);
+    } catch (error) {
+      console.error('Error fetching songs from Hygraph:', error);
     }
-  }, [songs, currentSongIndex]);
+  };
 
   useEffect(() => {
-    audioRef.current.volume = volume;
-  }, [volume]);
+    fetchSongsFromHygraph();
+  }, []);
 
   const togglePlayPause = () => {
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else {
-      audioRef.current.pause();
-      setIsPlaying(false);
+    const audio = audioRef.current;
+    if (audio) {
+      if (audio.paused) {
+        audio.play();
+        setIsPlaying(true);
+      } else {
+        audio.pause();
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -47,40 +68,34 @@ export const PlayerProvider = ({ children }) => {
     setProgress(0);
   };
 
-  useEffect(() => {
-    const updateProgress = () => {
-      if (audioRef.current.duration) {
-        setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
-      }
-    };
-
-    audioRef.current.addEventListener('timeupdate', updateProgress);
-
-    return () => {
-      audioRef.current.removeEventListener('timeupdate', updateProgress);
-    };
-  }, []);
+  const handleVolumeChange = (newVolume) => {
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
 
   return (
     <PlayerContext.Provider
       value={{
         songs,
-        setSongs,
         currentSongIndex,
-        setCurrentSongIndex,
         isPlaying,
-        setIsPlaying,
-        volume,
-        setVolume,
         progress,
-        setProgress,
+        setProgress, // Added setProgress here
+        volume,
+        audioRef,
         togglePlayPause,
         handleNextSong,
         handlePrevSong,
-        audioRef, // Add audio ref to context to use it in both Player and MiniPlayer
+        handleVolumeChange,
       }}
     >
       {children}
     </PlayerContext.Provider>
   );
+};
+
+export const usePlayer = () => {
+  return useContext(PlayerContext);
 };

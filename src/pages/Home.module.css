@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0.5rem; /* Reduced padding to minimize space */
   background: transparent;
   color: var(--gold-yellow);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -17,12 +17,12 @@
   animation: flash 1s infinite;
   transition: opacity 0.5s ease-in-out;
   text-align: center;
-  margin-top: 1rem; /* Reduced margin to bring closer to artwork */
-  margin-bottom: 1rem;
+  margin: 0.25rem 0; /* Reduced top and bottom margin to minimize vertical space */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2.5rem;
+  line-height: 1; /* Set line-height to 1 to remove extra vertical space */
+  height: auto; /* Set height to auto to ensure it only contains the words */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,8 +30,8 @@
 
 @media (max-width: 600px) {
   .flashingTitle {
-    font-size: 2rem; /* Increased font size for mobile */
-    height: 2.2rem; /* Adjusted height */
+    font-size: 2rem; /* Adjusted font size for mobile */
+    height: auto; /* Adjust height for mobile as well */
   }
 }
 

@@ -16,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     const isShortTitle = currentTitleIndex < 3; // First three titles
-    const intervalDuration = isShortTitle ? 5000 : 1500; // 5 seconds for short titles, 1.5 seconds for split titles
+    const intervalDuration = isShortTitle ? 5000 : 1100; // 5 seconds for short titles, 1.5 seconds for split titles
 
     const interval = setInterval(() => {
       setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);

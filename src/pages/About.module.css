@@ -1,0 +1,26 @@
+/* src/pages/About.module.css */
+
+.aboutContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #ffd700; /* Consistent gold color for title */
+  margin-bottom: 1rem; /* Create space below title */
+}
+
+.content {
+  line-height: 1.6;
+  font-size: 1rem;
+  text-align: left; /* Left-align the text for readability */
+}
+
+.content p {
+  margin-bottom: 1rem; /* Add space between paragraphs */
+}

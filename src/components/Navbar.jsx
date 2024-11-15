@@ -1,6 +1,8 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { BsMusicPlayerFill } from 'react-icons/bs';
+import { FaQuestion, FaExclamation } from 'react-icons/fa'; // Import the question and exclamation icons
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
@@ -17,10 +19,13 @@ const Navbar = () => {
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
       <NavLink to="/" end className={`${styles.navItem} ${styles.logo}`}>
-        Jukebox
+        <BsMusicPlayerFill className={styles.icon} /> {/* Music player icon for home */}
       </NavLink>
-      <NavLink to="/about" className={styles.navItem}> {/* Changed /info to /about */}
-        About
+      <NavLink to="https://www.tabularasarecords.net/collections/hit-em" className={styles.navItem} target="_blank" rel="noopener noreferrer">
+        <FaExclamation className={styles.icon} /> {/* Exclamation point icon for Merch */}
+      </NavLink>
+      <NavLink to="/about" className={styles.navItem}>
+        <FaQuestion className={styles.icon} /> {/* Question mark icon for About */}
       </NavLink>
     </nav>
   );

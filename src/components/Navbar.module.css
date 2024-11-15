@@ -8,8 +8,8 @@
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+  justify-content: space-evenly; /* Ensure items are evenly spaced across */
+  padding: 12px 10px; /* Increased top padding by 20% from 10px to 12px */
   background-color: transparent;
   backdrop-filter: blur(8px);
   z-index: 1000;
@@ -20,10 +20,7 @@
 
 .navItem {
   color: var(--gold-yellow);
-  font-size: 1.4rem; /* Increased font size */
   text-decoration: none;
-  margin-left: 20px;
-  font-weight: bold;
   transition: color 0.3s ease;
 }
 
@@ -31,8 +28,25 @@
   color: #d4af37;
 }
 
+.icon {
+  font-size: 2.1rem; /* Increased icon size by 30% */
+  color: var(--gold-yellow);
+}
+
 .logo {
   font-weight: bold;
-  font-size: 1.7rem; /* Increased font size */
+  font-size: 1.7rem;
   color: var(--gold-yellow);
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-around; /* Bring the icons closer together on smaller screens */
+    padding: 6px 5px; /* Adjusted padding on smaller screens to match the reduced size */
+  }
+
+  .icon {
+    font-size: 1.8rem; /* Reduce icon size slightly for smaller screens */
+  }
 }

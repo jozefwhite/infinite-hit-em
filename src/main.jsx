@@ -1,15 +1,17 @@
 // src/main.jsx
 import React from 'react';
-import 'focus-visible';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { PlayerProvider } from './context/PlayerContext.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <PlayerProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PlayerProvider>
   </React.StrictMode>
 );

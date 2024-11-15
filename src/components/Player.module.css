@@ -4,9 +4,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 1rem;
-  width: 100%;
   box-sizing: border-box;
+  z-index: 10; /* Ensure the player is above other layers */
 }
 
 .albumContainer {
@@ -14,23 +15,23 @@
   width: 100%;
   max-width: 480px;
   margin-bottom: 1rem;
+  z-index: 11; /* Ensure artwork is visible */
 }
 
 .albumArtwork {
   width: 100%;
-  border-radius: 20px;
+  border-radius: 12px; /* Updated radius to match MiniPlayer */
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease; /* Smooth scaling transition */
-  transform: scale(0.85); /* Default to smaller size */
 }
 
 .albumArtwork.playing {
-  transform: scale(1); /* Full size when playing */
+  transform: scale(1.05); /* Slight enlargement when playing */
 }
 
 .songInfo {
+  margin-top: 1rem;
   text-align: center;
-  margin: 1rem 0;
 }
 
 .songTitle {
@@ -46,20 +47,17 @@
 }
 
 .controlsContainer {
+  position: relative;
   width: 100%;
   max-width: 480px;
   margin-top: 20px;
-  backdrop-filter: blur(20px);
+  padding: 1rem;
+  backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  padding: 16px;
-  box-shadow:
-    0 8px 12px rgba(0, 0, 0, 0.1),
-    0 4px 6px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border-radius: 12px; /* Updated to match MiniPlayer */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  z-index: 12; /* Ensure controls are above background layers */
 }
 
 .progressBarContainer {
@@ -68,23 +66,20 @@
   background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 16px;
   overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .progressBar {
   height: 100%;
   background: linear-gradient(90deg, #00ff85, #006600);
-  transition: width 0.1s linear;
 }
 
 .controls {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 20px;
 }
 
 .controlButton {
@@ -94,10 +89,6 @@
   font-size: 24px;
   cursor: pointer;
   outline: none;
-  margin: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: transform 0.2s;
 }
 
@@ -106,9 +97,9 @@
 }
 
 .volumeControl {
-  width: 100%;
   display: flex;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .volumeIcon {
@@ -150,5 +141,9 @@
 
   .controlsContainer {
     max-width: 360px;
+  }
+
+  .volumeControl {
+    display: none; /* Hide volume control on mobile */
   }
 }

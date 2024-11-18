@@ -13,8 +13,9 @@ export const PlayerProvider = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef(null);
+  const audioRef = useRef(new Audio());
 
+  // Fetch songs from Hygraph
   const fetchSongsFromHygraph = async () => {
     const query = gql`
       {
@@ -45,34 +46,77 @@ export const PlayerProvider = ({ children }) => {
     fetchSongsFromHygraph();
   }, []);
 
-  const togglePlayPause = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (audio.paused) {
-        audio.play();
-        setIsPlaying(true);
-      } else {
-        audio.pause();
-        setIsPlaying(false);
+  // Update audio source when current song changes
+  useEffect(() => {
+    if (songs.length > 0 && audioRef.current) {
+      audioRef.current.src = songs[currentSongIndex].audioFile.url;
+      audioRef.current.currentTime = 0;
+      audioRef.current.volume = volume;
+
+      // Autoplay if isPlaying is true
+      if (isPlaying) {
+        audioRef.current.play();
       }
     }
+  }, [currentSongIndex]);
+
+  // Handle play/pause without resetting the audio
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
+
+  // Update volume
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  // Update progress as the song plays
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    const updateProgress = () => {
+      if (audio.duration) {
+        setProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+
+    audio.addEventListener('timeupdate', updateProgress);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateProgress);
+    };
+  }, [currentSongIndex]);
+
+  const togglePlayPause = () => {
+    setIsPlaying((prev) => !prev);
   };
 
   const handleNextSong = () => {
+    const wasPlaying = isPlaying;
     setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
     setProgress(0);
+    setIsPlaying(wasPlaying);
   };
 
   const handlePrevSong = () => {
-    setCurrentSongIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : songs.length - 1));
+    const wasPlaying = isPlaying;
+    setCurrentSongIndex((prevIndex) =>
+      prevIndex === 0 ? songs.length - 1 : prevIndex - 1
+    );
     setProgress(0);
+    setIsPlaying(wasPlaying);
   };
 
   const handleVolumeChange = (newVolume) => {
     setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-    }
   };
 
   return (
@@ -82,7 +126,7 @@ export const PlayerProvider = ({ children }) => {
         currentSongIndex,
         isPlaying,
         progress,
-        setProgress, // Added setProgress here
+        setProgress,
         volume,
         audioRef,
         togglePlayPause,

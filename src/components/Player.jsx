@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa';
 import { usePlayer } from '../context/PlayerContext';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Player = () => {
   const {
@@ -121,91 +122,149 @@ const Player = () => {
     return <div className={styles.loadingMessage}>Loading songs...</div>;
   }
 
+  if(!currentSong) {
+    return <div>Error: couldn't find song</div>
+  }
+  
   return (
-    <div className={isMinimized ? styles.miniPlayerWrapper : styles.playerWrapper}>
-      {currentSong && (
-        <>
-          {!isMinimized && (
-            <div className={styles.albumContainer}>
-              <img
+    <PlayerWrapper>
+      <audio ref={audioRef} src={currentSong.audioFile.url} />
+      {!isMinimized &&
+        <HomePlayer>
+          <div className={styles.albumContainer}>
+            <img
+              src={currentSong.albumArtwork.url}
+              alt={`Album artwork for ${currentSong.title}`}
+              className={`${styles.albumArtwork} ${isPlaying ? styles.playing : ''}`}
+            />
+          </div>
+          <div className={styles.songInfo}>
+            <h2 className={styles.songTitle}>{currentSong.title}</h2>
+            <p className={styles.songArtist}>{currentSong.artist}</p>
+          </div>
+        </HomePlayer>
+      }
+        <div className={`${styles.player} ${isMinimized ? styles.miniPlayer : ''}`}>
+        {isMinimized ?
+          <MiniPlayerContainer>
+            <img
                 src={currentSong.albumArtwork.url}
                 alt={`Album artwork for ${currentSong.title}`}
-                className={`${styles.albumArtwork} ${isPlaying ? styles.playing : ''}`}
-              />
-            </div>
-          )}
-
-          {!isMinimized && location.pathname === '/' && (
-            <div className={styles.songInfo}>
-              <h2 className={styles.songTitle}>{currentSong.title}</h2>
-              <p className={styles.songArtist}>{currentSong.artist}</p>
-            </div>
-          )}
-
-          <div className={`${styles.player} ${isMinimized ? styles.miniPlayer : ''}`}>
-            <audio ref={audioRef} src={currentSong.audioFile.url} />
-
-            {isMinimized && (
-              <div className={styles.miniAlbumArtwork}>
-                <img
-                  src={currentSong.albumArtwork.url}
-                  alt={`Album artwork for ${currentSong.title}`}
-                  className={styles.miniArtworkImage}
-                />
+                className={styles.miniArtworkImage}
+            />
+            <SongInfo>
+              <SongTitle>{currentSong.title}</SongTitle>
+              <SongArtist>{currentSong.artist}</SongArtist>
+            </SongInfo>
+            
+            <MiniPlayerControls>
+              <ControlButton onClick={togglePlayPause}>
+                {isPlaying ? <FaPause /> : <FaPlay />}
+              </ControlButton>
+              <ControlButton onClick={handleNextSong}>
+                <FaForward />
+              </ControlButton>
+            </MiniPlayerControls>
+          </MiniPlayerContainer>
+          :
+          <div className={`${styles.controlsContainer} ${isMinimized ? styles.miniControls : ''}`}>
+            <div
+                className={styles.progressBarContainer}
+                onMouseDown={handleMouseDown}
+                onClick={handleProgressClick}
+              >
+                <div className={styles.progressBar} style={{ width: `${progress}%` }}></div>
               </div>
-            )}
-
-            <div className={`${styles.controlsContainer} ${isMinimized ? styles.miniControls : ''}`}>
-              {isMinimized ? (
-                <>
-                  <button onClick={togglePlayPause} className={styles.controlButton}>
-                    {isPlaying ? <FaPause /> : <FaPlay />}
-                  </button>
-                  <button onClick={handleNextSong} className={styles.miniControlButton}>
-                    <FaForward />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <div
-                    className={styles.progressBarContainer}
-                    onMouseDown={handleMouseDown}
-                    onClick={handleProgressClick}
-                  >
-                    <div className={styles.progressBar} style={{ width: `${progress}%` }}></div>
-                  </div>
-                  <div className={styles.controls}>
-                    <button onClick={handlePrevSong} className={styles.controlButton}>
-                      <FaBackward />
-                    </button>
-                    <button onClick={togglePlayPause} className={styles.controlButton}>
-                      {isPlaying ? <FaPause /> : <FaPlay />}
-                    </button>
-                    <button onClick={handleNextSong} className={styles.controlButton}>
-                      <FaForward />
-                    </button>
-                  </div>
-                  <div className={styles.volumeControl}>
-                    <FaVolumeUp className={styles.volumeIcon} />
-                    <input
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.01"
-                      value={volume}
-                      onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-                      className={styles.volumeSlider}
-                      aria-label="Volume Slider"
-                    />
-                  </div>
-                </>
-              )}
+              <div className={styles.controls}>
+                <button onClick={handlePrevSong} className={styles.controlButton}>
+                  <FaBackward />
+                </button>
+                <button onClick={togglePlayPause} className={styles.controlButton}>
+                  {isPlaying ? <FaPause /> : <FaPlay />}
+                </button>
+                <button onClick={handleNextSong} className={styles.controlButton}>
+                  <FaForward />
+                </button>
+              </div>
+              <div className={styles.volumeControl}>
+                <FaVolumeUp className={styles.volumeIcon} />
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+                  className={styles.volumeSlider}
+                  aria-label="Volume Slider"
+                />
             </div>
           </div>
-        </>
-      )}
-    </div>
+        }
+        </div>
+    </PlayerWrapper>
   );
+
 };
+
+const PlayerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px; /* Keep consistent width with player size */
+  margin: 0 auto;
+  padding-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    max-width: 95%; /* Adjust size for mobile to maintain balance */
+  }
+`;
+
+const SongInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+`;
+
+const MiniPlayerContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 70px 1fr 120px;
+  align-items: center;
+`
+
+const MiniPlayerControls = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const SongTitle = styled.p`
+  margin-bottom: 0px;
+`
+
+const SongArtist = styled.p`
+  margin-bottom: 0px;
+  font-size: 0.7rem; /* Smaller font size for the artist name */
+  color: #ccc; /* Use a light gray color for softer emphasis */
+`
+
+const HomePlayer = styled.div`
+`;
+
+const ControlButton = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+`
 
 export default Player;

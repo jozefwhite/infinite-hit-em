@@ -108,6 +108,11 @@
   bottom: 10px; /* Moves the controls up or down */
 }
 
+.miniControlButton {
+  position: relative;
+  right: 30px;
+}
+
 .progressBarContainer {
   width: 100%;
   height: 8px;

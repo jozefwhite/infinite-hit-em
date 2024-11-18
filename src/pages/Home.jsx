@@ -31,6 +31,7 @@ const Home = () => {
       <h1 className={styles.flashingTitle}>
         {currentTitle}
       </h1>
+      
     </div>
   );
 };

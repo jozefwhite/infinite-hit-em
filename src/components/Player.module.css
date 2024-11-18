@@ -205,7 +205,6 @@
   }
 
   .playerWrapper,
-  .albumContainer,
   .player {
     max-width: 95%; /* Adjust size for mobile to maintain balance */
   }
